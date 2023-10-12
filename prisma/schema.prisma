@@ -20,6 +20,7 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   reviews    Review[]
+  Order      Order[]
 
   @@map("users")
 }
@@ -34,6 +35,7 @@ model Plan {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   reviews     Review[]
+  Order       Order[]
 
   @@map("plans")
 }
@@ -52,8 +54,28 @@ model Review {
   @@map("reviews")
 }
 
+model Order {
+  id        String   @id @default(uuid())
+  plan      Plan     @relation(fields: [planId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  status    Status   @default(pending)
+  orderDate DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  planId    String
+  userId    String
+
+  @@map("orders")
+}
+
 enum Role {
   user
   admin
   super_admin
+}
+
+enum Status {
+  pending
+  calcelled
+  delivered
 }
