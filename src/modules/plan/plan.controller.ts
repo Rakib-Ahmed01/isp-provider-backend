@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
+import { PlanFilterOptions } from '../../types/FilterOptions';
+import { PaginationOptions } from '../../types/PaginationOption';
+import { pickOptions } from '../../utils/pickOptions';
 import { sendResponse } from '../../utils/sendResponse';
 import { IPlan, IReview } from './plan.interface';
 import {
@@ -20,7 +23,7 @@ export const createPlan = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Plan created successfully',
       success: true,
-      data: plan as IPlan,
+      data: plan,
     });
   },
 );
@@ -43,14 +46,27 @@ export const createReview = expressAsyncHandler(
 );
 
 export const getAllPlans = expressAsyncHandler(
-  async (_req: Request, res: Response) => {
-    const plans = await getAllPlansService();
+  async (req: Request, res: Response) => {
+    const paginationOptions = pickOptions(
+      req.query as Record<string, unknown>,
+      ['page', 'size', 'sortOrder', 'sortBy'],
+    ) as PaginationOptions;
+
+    const filters = pickOptions(req.query as Record<string, unknown>, [
+      'minPrice',
+      'maxPrice',
+      'title',
+      'search',
+    ]) as PlanFilterOptions;
+
+    const result = await getAllPlansService(paginationOptions, filters);
 
     sendResponse<IPlan>(res, {
       statusCode: StatusCodes.CREATED,
       message: 'Plans retrieved successfully',
       success: true,
-      data: plans as unknown as IPlan,
+      data: result.data as unknown as IPlan,
+      meta: result.meta,
     });
   },
 );

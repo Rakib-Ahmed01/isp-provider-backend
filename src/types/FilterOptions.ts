@@ -1,7 +1,5 @@
-export type BookFilterOptions = {
+export type PlanFilterOptions = {
   title: string;
-  author: string;
-  genre: string;
   minPrice: number;
   maxPrice: number;
   search: string;

@@ -1,6 +1,12 @@
 import { Prisma } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 import prisma from '../../lib/prisma';
+import { PlanFilterOptions } from '../../types/FilterOptions';
+import { PaginationOptions } from '../../types/PaginationOption';
+import { calculateSkip } from '../../utils/calculateSkip';
+import { handlePlanFilter } from '../../utils/handleFilters';
+import { handleSearch } from '../../utils/handleSearch';
+import { handleSortByAndSortOrder } from '../../utils/handleSortByAndSortOrder';
 import { isEmptyObject } from '../../utils/isEmptyObject';
 import throwApiError from '../../utils/throwApiError';
 import { IPlan, IReview } from './plan.interface';
@@ -52,10 +58,39 @@ export const createReviewService = async (
   });
 };
 
-export const getAllPlansService = async () => {
-  return await prisma.plan.findMany({
-    select: selectPlanProperties,
-  });
+export const getAllPlansService = async (
+  paginationOption: PaginationOptions,
+  filterOption: PlanFilterOptions,
+) => {
+  const { page, size, skip } = calculateSkip(paginationOption);
+  const { sortBy, sortOrder } = handleSortByAndSortOrder(paginationOption);
+  const { search, ...filters } = filterOption;
+  const searchCondition = handleSearch(search, ['title']);
+  const filterObj = handlePlanFilter(filters);
+
+  const [plans, total] = await Promise.all([
+    prisma.plan.findMany({
+      take: size,
+      skip,
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      where: {
+        AND: [searchCondition, filterObj],
+      },
+    }),
+    prisma.plan.count(),
+  ]);
+
+  return {
+    data: plans,
+    meta: {
+      page,
+      size,
+      total,
+      totalPage: Math.ceil(total / size),
+    },
+  };
 };
 
 export const getSinglePlanService = async (id: string) => {
