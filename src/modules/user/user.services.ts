@@ -1,20 +1,23 @@
+import { Prisma } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 import prisma from '../../lib/prisma';
 import { isEmptyObject } from '../../utils/isEmptyObject';
 import throwApiError from '../../utils/throwApiError';
 import { IUser } from './user.interface';
 
+const selectUserProperties: Prisma.UserSelect = {
+  id: true,
+  name: true,
+  email: true,
+  profileImg: true,
+  role: true,
+  createdAt: true,
+  updatedAt: true,
+};
+
 export const getAllUsersService = async () => {
   return await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 };
 
@@ -23,15 +26,7 @@ export const getSingleUserService = async (id: string) => {
     where: {
       id,
     },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 
   if (!user) {
@@ -53,15 +48,7 @@ export const updateUserService = async (
     where: {
       id,
     },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 
   if (!user) {
@@ -73,15 +60,7 @@ export const updateUserService = async (
       id,
     },
     data: payload,
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 };
 
@@ -90,15 +69,7 @@ export const deleteUserService = async (id: string) => {
     where: {
       id,
     },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 
   if (!user) {
@@ -109,14 +80,6 @@ export const deleteUserService = async (id: string) => {
     where: {
       id,
     },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      profileImg: true,
-      role: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+    select: selectUserProperties,
   });
 };
