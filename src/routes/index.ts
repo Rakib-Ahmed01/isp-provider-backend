@@ -25,7 +25,7 @@ const routes: Route[] = [
     router: profileRouter,
   },
   {
-    path: '/plan',
+    path: '/plans',
     router: planRouter,
   },
 ];

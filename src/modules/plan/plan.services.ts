@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import prisma from '../../lib/prisma';
 import { isEmptyObject } from '../../utils/isEmptyObject';
 import throwApiError from '../../utils/throwApiError';
-import { IPlan } from './plan.interface';
+import { IPlan, IReview } from './plan.interface';
 
 const selectPlanProperties: Prisma.PlanSelect = {
   id: true,
@@ -14,6 +14,42 @@ const selectPlanProperties: Prisma.PlanSelect = {
   isAvailable: true,
   createdAt: true,
   updatedAt: true,
+};
+
+export const createPlanService = async (plan: IPlan) => {
+  return await prisma.plan.create({
+    data: plan,
+  });
+};
+
+export const createReviewService = async (
+  planId: string,
+  review: IReview,
+  userId: string | undefined,
+) => {
+  if (isEmptyObject(review)) {
+    throwApiError(StatusCodes.BAD_REQUEST, 'Missing review data');
+  }
+
+  if (!userId) {
+    throwApiError(StatusCodes.BAD_REQUEST, 'Missing user id');
+  }
+
+  return await prisma.review.create({
+    data: {
+      ...review,
+      plan: {
+        connect: {
+          id: planId,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
 };
 
 export const getAllPlansService = async () => {
@@ -27,7 +63,10 @@ export const getSinglePlanService = async (id: string) => {
     where: {
       id,
     },
-    select: selectPlanProperties,
+    select: {
+      ...selectPlanProperties,
+      reviews: true,
+    },
   });
 
   if (!plan) {

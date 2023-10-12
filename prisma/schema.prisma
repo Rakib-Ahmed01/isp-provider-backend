@@ -19,21 +19,37 @@ model User {
   profileImg String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  reviews    Review[]
 
   @@map("users")
 }
 
 model Plan {
   id          String   @id @default(uuid())
-  title       String
+  title       String   @unique
   description String
   price       Float
   image       String
   isAvailable Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  reviews     Review[]
 
   @@map("plans")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  comment   String
+  rating    Float
+  plan      Plan     @relation(fields: [planId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  planId    String
+  userId    String
+
+  @@map("reviews")
 }
 
 enum Role {
