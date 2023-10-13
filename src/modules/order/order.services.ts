@@ -77,6 +77,23 @@ export const getSingleOrderService = async (id: string) => {
   return order;
 };
 
+export const getOrdersByUserService = async (userId: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+  });
+  if (!user) {
+    throwApiError(StatusCodes.BAD_REQUEST, 'User not found');
+  }
+
+  return await prisma.order.findMany({
+    where: {
+      userId,
+    },
+  });
+};
+
 export const updateOrderService = async (
   id: string,
   payload: Partial<IOrder>,

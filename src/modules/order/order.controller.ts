@@ -9,6 +9,7 @@ import {
   createOrderService,
   deleteOrderService,
   getAllOrdersService,
+  getOrdersByUserService,
   getSingleOrderService,
   updateOrderService,
 } from './order.services';
@@ -55,6 +56,20 @@ export const getSingleOrder = expressAsyncHandler(
       message: 'Order retrieved successfully',
       success: true,
       data: order as unknown as IOrder,
+    });
+  },
+);
+
+export const getOrdersByUser = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const user = req.jwtPayload;
+    const orders = await getOrdersByUserService(user?.userId as string);
+
+    sendResponse<IOrder>(res, {
+      statusCode: StatusCodes.CREATED,
+      message: 'Order retrieved successfully',
+      success: true,
+      data: orders as unknown as IOrder,
     });
   },
 );

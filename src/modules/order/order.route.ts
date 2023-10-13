@@ -5,12 +5,15 @@ import {
   createOrder,
   deleteOrder,
   getAllOrders,
+  getOrdersByUser,
   getSingleOrder,
   updateOrder,
 } from './order.controller';
 import { createOrderSchema, updateOrderSchema } from './order.validation';
 
 export const orderRouter = express.Router();
+
+orderRouter.get('/users', auth(['user']), getOrdersByUser);
 
 orderRouter
   .route('/:id')
