@@ -10,12 +10,12 @@ import {
 export const authRouter = express.Router();
 
 authRouter.post(
-  '/signup',
+  '/register',
   validateRequest(registerUserZodSchema),
   registerUser,
 );
 
-authRouter.post('/signin', validateRequest(loginUserZodSchema), loginUser);
+authRouter.post('/login', validateRequest(loginUserZodSchema), loginUser);
 
 authRouter.get(
   '/refresh-token',

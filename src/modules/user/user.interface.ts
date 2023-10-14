@@ -1,3 +1,3 @@
 import { Prisma } from '@prisma/client';
 
-export type IUser = Prisma.UserCreateInput;
+export type IUser = Prisma.$UserPayload['scalars'];

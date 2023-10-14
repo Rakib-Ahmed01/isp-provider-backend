@@ -25,10 +25,6 @@ export const registerUserZodSchema = z.object({
       required_error: 'Profile image is required',
       invalid_type_error: 'Profile image must be string',
     }),
-    role: z.enum(roles as readonly [string, ...string[]], {
-      required_error: 'Role is required',
-      invalid_type_error: 'Role must be a string',
-    }),
   }),
 });
 

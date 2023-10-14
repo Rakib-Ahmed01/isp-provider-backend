@@ -1,6 +1,8 @@
 export type JwtPayload = {
   role: 'user' | 'admin' | 'super_admin';
-  userId: string;
+  id: string;
+  name: string;
+  profileImg: string;
   iat?: number;
   exp?: number;
 };

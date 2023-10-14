@@ -9,7 +9,7 @@ import { handleSearch } from '../../utils/handleSearch';
 import { handleSortByAndSortOrder } from '../../utils/handleSortByAndSortOrder';
 import { isEmptyObject } from '../../utils/isEmptyObject';
 import throwApiError from '../../utils/throwApiError';
-import { IPlan, IReview } from './plan.interface';
+import { IPlan } from './plan.interface';
 
 const selectPlanProperties: Prisma.PlanSelect = {
   id: true,
@@ -30,7 +30,7 @@ export const createPlanService = async (plan: IPlan) => {
 
 export const createReviewService = async (
   planId: string,
-  review: IReview,
+  review: Prisma.ReviewCreateInput,
   userId: string | undefined,
 ) => {
   if (isEmptyObject(review)) {

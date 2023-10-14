@@ -40,7 +40,7 @@ export const createReview = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Review created successfully',
       success: true,
-      data: createdReview as unknown as IReview,
+      data: createdReview,
     });
   },
 );
@@ -65,7 +65,7 @@ export const getAllPlans = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Plans retrieved successfully',
       success: true,
-      data: result.data as unknown as IPlan,
+      data: result.data,
       meta: result.meta,
     });
   },
@@ -80,7 +80,7 @@ export const getSinglePlan = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Plan retrieved successfully',
       success: true,
-      data: plan as unknown as IPlan,
+      data: plan,
     });
   },
 );
@@ -94,7 +94,7 @@ export const updatePlan = expressAsyncHandler(
       statusCode: StatusCodes.OK,
       message: 'Plan updated successfully',
       success: true,
-      data: updatedPlan as unknown as IPlan,
+      data: updatedPlan,
     });
   },
 );
@@ -108,7 +108,7 @@ export const deletePlan = expressAsyncHandler(
       statusCode: StatusCodes.OK,
       message: 'Plan deleted successfully',
       success: true,
-      data: deletedPlan as unknown as IPlan,
+      data: deletedPlan,
     });
   },
 );

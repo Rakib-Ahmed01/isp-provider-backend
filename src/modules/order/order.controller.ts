@@ -22,7 +22,7 @@ export const createOrder = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Order created successfully',
       success: true,
-      data: order as unknown as IOrder,
+      data: order,
     });
   },
 );
@@ -40,7 +40,7 @@ export const getAllOrders = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Orders retrieved successfully',
       success: true,
-      data: result.data as unknown as IOrder,
+      data: result.data,
       meta: result.meta,
     });
   },
@@ -55,7 +55,7 @@ export const getSingleOrder = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Order retrieved successfully',
       success: true,
-      data: order as unknown as IOrder,
+      data: order,
     });
   },
 );
@@ -69,7 +69,7 @@ export const getOrdersByUser = expressAsyncHandler(
       statusCode: StatusCodes.CREATED,
       message: 'Order retrieved successfully',
       success: true,
-      data: orders as unknown as IOrder,
+      data: orders,
     });
   },
 );
@@ -83,7 +83,7 @@ export const updateOrder = expressAsyncHandler(
       statusCode: StatusCodes.OK,
       message: 'Order updated successfully',
       success: true,
-      data: updatedOrder as unknown as IOrder,
+      data: updatedOrder,
     });
   },
 );
@@ -97,7 +97,7 @@ export const deleteOrder = expressAsyncHandler(
       statusCode: StatusCodes.OK,
       message: 'Order deleted successfully',
       success: true,
-      data: deletedOrder as unknown as IOrder,
+      data: deletedOrder,
     });
   },
 );

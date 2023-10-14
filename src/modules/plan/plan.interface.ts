@@ -1,4 +1,4 @@
 import { Prisma } from '@prisma/client';
 
-export type IPlan = Prisma.PlanCreateInput;
-export type IReview = Prisma.ReviewCreateInput;
+export type IPlan = Prisma.$PlanPayload['scalars'];
+export type IReview = Prisma.$ReviewPayload['scalars'];

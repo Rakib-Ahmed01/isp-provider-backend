@@ -48,7 +48,9 @@ export const loginUserService = async (payload: {
 
   const { accessToken, refreshToken } = generateJwtTokens({
     role: user.role,
-    userId: user.id,
+    id: user.id,
+    name: user.name,
+    profileImg: user.profileImg,
   });
 
   return {
@@ -69,7 +71,7 @@ export const refreshTokenService = async (refreshToken: string) => {
     throwApiError(StatusCodes.FORBIDDEN, 'Invalid token');
   }
 
-  const { role, userId } = decodedData;
+  const { role, id: userId } = decodedData;
 
   const user = await prisma.user.findFirst({
     where: {
@@ -83,7 +85,9 @@ export const refreshTokenService = async (refreshToken: string) => {
 
   const { accessToken, refreshToken: newRefreshToken } = generateJwtTokens({
     role,
-    userId,
+    id: userId,
+    name: user.name,
+    profileImg: user.profileImg,
   });
 
   return { accessToken, newRefreshToken };
