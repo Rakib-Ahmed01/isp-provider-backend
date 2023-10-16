@@ -32,7 +32,7 @@ export const createReview = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const review = req.body;
-    const userId = req.jwtPayload?.userId;
+    const userId = req.jwtPayload?.id;
 
     const createdReview = await createReviewService(id, review, userId);
 

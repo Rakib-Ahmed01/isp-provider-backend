@@ -16,7 +16,8 @@ const selectPlanProperties: Prisma.PlanSelect = {
   title: true,
   description: true,
   price: true,
-  image: true,
+  speed: true,
+  reviews: {},
   isAvailable: true,
   createdAt: true,
   updatedAt: true,
@@ -30,7 +31,7 @@ export const createPlanService = async (plan: IPlan) => {
 
 export const createReviewService = async (
   planId: string,
-  review: Prisma.ReviewCreateInput,
+  review: { comment: string; rating: number; planId: string },
   userId: string | undefined,
 ) => {
   if (isEmptyObject(review)) {
@@ -41,9 +42,35 @@ export const createReviewService = async (
     throwApiError(StatusCodes.BAD_REQUEST, 'Missing user id');
   }
 
+  if (!planId) {
+    throwApiError(StatusCodes.BAD_REQUEST, 'Missing plan id');
+  }
+
+  const plan = await prisma.plan.findFirst({
+    where: {
+      id: planId,
+    },
+  });
+
+  if (!plan) {
+    throwApiError(StatusCodes.NOT_FOUND, 'Plan not found');
+  }
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throwApiError(StatusCodes.NOT_FOUND, 'User not found');
+  }
+
+  const newReview = { comment: review.comment, rating: review.rating };
+
   return await prisma.review.create({
     data: {
-      ...review,
+      ...newReview,
       plan: {
         connect: {
           id: planId,
@@ -98,9 +125,12 @@ export const getSinglePlanService = async (id: string) => {
     where: {
       id,
     },
-    select: {
-      ...selectPlanProperties,
-      reviews: true,
+    include: {
+      reviews: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 

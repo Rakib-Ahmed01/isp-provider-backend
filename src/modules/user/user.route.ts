@@ -11,8 +11,8 @@ export const userRouter = express.Router();
 
 userRouter
   .route('/:id')
-  .get(auth(['admin']), getSingleUser)
-  .patch(auth(['admin']), updateUser)
-  .delete(auth(['admin']), deleteUser);
+  .get(auth(['user', 'admin', 'super_admin']), getSingleUser)
+  .patch(auth(['user', 'admin', 'super_admin']), updateUser)
+  .delete(auth(['user', 'admin', 'super_admin']), deleteUser);
 
 userRouter.route('/').get(auth(['admin']), getAllUsers);

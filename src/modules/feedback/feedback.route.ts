@@ -9,4 +9,4 @@ export const feedbackRouter = express.Router();
 feedbackRouter
   .route('/')
   .get(auth(['admin']), getAllFeedbacks)
-  .post(auth(['admin']), validateRequest(createFeedbackSchema), createFeedback);
+  .post(validateRequest(createFeedbackSchema), createFeedback);

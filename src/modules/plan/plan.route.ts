@@ -26,11 +26,11 @@ planRouter.post(
 
 planRouter
   .route('/:id')
-  .get(auth(['admin']), getSinglePlan)
-  .patch(auth(['admin']), validateRequest(updatePlanSchema), updatePlan)
-  .delete(auth(['admin']), deletePlan);
+  .get(getSinglePlan)
+  .patch(validateRequest(updatePlanSchema), updatePlan)
+  .delete(deletePlan);
 
 planRouter
   .route('/')
-  .get(auth(['admin']), getAllPlans)
-  .post(auth(['admin']), validateRequest(createPlanSchema), createPlan);
+  .get(getAllPlans)
+  .post(validateRequest(createPlanSchema), createPlan);

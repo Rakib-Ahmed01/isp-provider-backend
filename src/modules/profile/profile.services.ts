@@ -4,11 +4,11 @@ import { JwtPayload } from '../../types/JwtPayload';
 import throwApiError from '../../utils/throwApiError';
 
 export const getProfileService = async (jwtPayload: JwtPayload) => {
-  const { userId } = jwtPayload;
+  const { id } = jwtPayload;
 
   const user = await prisma.user.findFirst({
     where: {
-      id: userId,
+      id,
     },
   });
 
