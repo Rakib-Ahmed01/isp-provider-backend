@@ -13,15 +13,23 @@ import { createOrderSchema, updateOrderSchema } from './order.validation';
 
 export const orderRouter = express.Router();
 
-orderRouter.get('/users', auth(['user']), getOrdersByUser);
+orderRouter.get('/user', auth(['user']), getOrdersByUser);
 
 orderRouter
   .route('/:id')
   .get(auth(['admin', 'user']), getSingleOrder)
-  .patch(auth(['admin']), validateRequest(updateOrderSchema), updateOrder)
-  .delete(auth(['admin']), deleteOrder);
+  .patch(
+    auth(['admin', 'user']),
+    validateRequest(updateOrderSchema),
+    updateOrder,
+  )
+  .delete(auth(['admin', 'user']), deleteOrder);
 
 orderRouter
   .route('/')
   .get(auth(['admin']), getAllOrders)
-  .post(auth(['admin']), validateRequest(createOrderSchema), createOrder);
+  .post(
+    auth(['admin', 'user']),
+    validateRequest(createOrderSchema),
+    createOrder,
+  );

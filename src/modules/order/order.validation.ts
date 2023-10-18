@@ -10,10 +10,12 @@ export const createOrderSchema = z.object({
       required_error: 'User id is required',
       invalid_type_error: 'User id must be a string',
     }),
-    status: z.enum(['pending', 'completed', 'canceled'], {
-      required_error: 'Status is required',
-      invalid_type_error: 'Status must be a string',
-    }),
+    status: z
+      .enum(['pending', 'delivered', 'canceled'], {
+        required_error: 'Status is required',
+        invalid_type_error: 'Status must be a string',
+      })
+      .optional(),
   }),
 });
 

@@ -15,4 +15,4 @@ userRouter
   .patch(auth(['user', 'admin', 'super_admin']), updateUser)
   .delete(auth(['user', 'admin', 'super_admin']), deleteUser);
 
-userRouter.route('/').get(auth(['admin']), getAllUsers);
+userRouter.route('/').get(auth(['admin', 'super_admin']), getAllUsers);

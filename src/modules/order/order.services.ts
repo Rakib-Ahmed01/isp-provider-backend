@@ -27,6 +27,26 @@ const selectOrderProperties: Prisma.OrderSelect = {
 };
 
 export const createOrderService = async (order: IOrder) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: order.userId,
+    },
+  });
+
+  if (!user) {
+    throwApiError(StatusCodes.NOT_FOUND, 'User not found');
+  }
+
+  const plan = await prisma.plan.findFirst({
+    where: {
+      id: order.planId,
+    },
+  });
+
+  if (!plan) {
+    throwApiError(StatusCodes.NOT_FOUND, 'Plan not found');
+  }
+
   return await prisma.order.create({
     data: order,
   });
@@ -44,6 +64,16 @@ export const getAllOrdersService = async (
       skip,
       orderBy: {
         [sortBy]: sortOrder,
+      },
+      include: {
+        plan: {
+          select: {
+            title: true,
+            price: true,
+            speed: true,
+            id: true,
+          },
+        },
       },
     }),
     prisma.order.count(),
@@ -90,6 +120,16 @@ export const getOrdersByUserService = async (userId: string) => {
   return await prisma.order.findMany({
     where: {
       userId,
+    },
+    include: {
+      plan: {
+        select: {
+          title: true,
+          price: true,
+          speed: true,
+          id: true,
+        },
+      },
     },
   });
 };

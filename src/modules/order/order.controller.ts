@@ -63,7 +63,7 @@ export const getSingleOrder = expressAsyncHandler(
 export const getOrdersByUser = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const user = req.jwtPayload;
-    const orders = await getOrdersByUserService(user?.userId as string);
+    const orders = await getOrdersByUserService(user?.id as string);
 
     sendResponse<IOrder>(res, {
       statusCode: StatusCodes.CREATED,

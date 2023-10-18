@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
+import { pickOptions } from '../../utils/pickOptions';
 import { sendResponse } from '../../utils/sendResponse';
 import { IUser } from './user.interface';
 import {
@@ -11,8 +12,11 @@ import {
 } from './user.services';
 
 export const getAllUsers = expressAsyncHandler(
-  async (_req: Request, res: Response) => {
-    const users = await getAllUsersService();
+  async (req: Request, res: Response) => {
+    const { role } = pickOptions(req.query as Record<string, unknown>, [
+      'role',
+    ]) as { role: IUser['role'] };
+    const users = await getAllUsersService(role);
 
     sendResponse<Omit<IUser, 'password'>>(res, {
       statusCode: StatusCodes.CREATED,

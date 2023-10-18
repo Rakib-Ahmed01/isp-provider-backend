@@ -14,10 +14,6 @@ export const createFeedback = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const feedback = await createFeedbackService(req.body);
 
-    const authHeader = req.headers.authorization;
-
-    console.log({ authHeader });
-
     sendResponse<IFeedback>(res, {
       statusCode: StatusCodes.CREATED,
       message: 'Feedback created successfully',

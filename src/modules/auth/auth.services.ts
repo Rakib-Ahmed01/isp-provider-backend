@@ -40,6 +40,10 @@ export const loginUserService = async (payload: {
     throwApiError(StatusCodes.NOT_FOUND, `User not found`);
   }
 
+  if (user?.isBanned) {
+    throwApiError(StatusCodes.FORBIDDEN, 'Your account has been banned');
+  }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {

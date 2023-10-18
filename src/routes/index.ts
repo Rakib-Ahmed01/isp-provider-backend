@@ -1,5 +1,7 @@
 import express, { Router } from 'express';
 import { authRouter } from '../modules/auth/auth.route';
+import { blogRouter } from '../modules/blog/blog.route';
+import { faqRouter } from '../modules/faq/faq.route';
 import { feedbackRouter } from '../modules/feedback/feedback.route';
 import { orderRouter } from '../modules/order/order.route';
 import { planRouter } from '../modules/plan/plan.route';
@@ -35,8 +37,16 @@ const routes: Route[] = [
     router: orderRouter,
   },
   {
-    path: '/feedback',
+    path: '/feedbacks',
     router: feedbackRouter,
+  },
+  {
+    path: '/blogs',
+    router: blogRouter,
+  },
+  {
+    path: '/faqs',
+    router: faqRouter,
   },
 ];
 

@@ -153,7 +153,6 @@ export const updatePlanService = async (
     where: {
       id,
     },
-    select: selectPlanProperties,
   });
 
   if (!plan) {
@@ -174,7 +173,6 @@ export const deletePlanService = async (id: string) => {
     where: {
       id,
     },
-    select: selectPlanProperties,
   });
 
   if (!plan) {

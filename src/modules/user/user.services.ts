@@ -10,13 +10,21 @@ const selectUserProperties: Prisma.UserSelect = {
   name: true,
   email: true,
   profileImg: true,
+  isBanned: true,
   role: true,
   createdAt: true,
   updatedAt: true,
 };
 
-export const getAllUsersService = async () => {
+export const getAllUsersService = async (role: IUser['role']) => {
+  if (role !== 'user' && role !== 'admin' && role !== 'super_admin') {
+    throwApiError(StatusCodes.BAD_REQUEST, 'Invalid role');
+  }
+
   return await prisma.user.findMany({
+    where: {
+      role,
+    },
     select: selectUserProperties,
   });
 };

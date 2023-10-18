@@ -4,4 +4,6 @@ import { getProfile } from './profile.controller';
 
 export const profileRouter = express.Router();
 
-profileRouter.route('/').get(auth(['admin', 'user']), getProfile);
+profileRouter
+  .route('/')
+  .get(auth(['admin', 'user', 'super_admin']), getProfile);
