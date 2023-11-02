@@ -171,3 +171,9 @@ Example: Route - HTTP Verb [Roles]
 ![Database Diagram](/src/data/images/isp-db-diagram.png)
 
 [Database Diagram](https://dbdiagram.io/d/65422a817d8bbd6465449082)
+
+# Swagger API Documentation (Not complete)
+
+It's working fine on localhost. But it is not working on Vercel. I'm trying to solve the issue.
+
+![Swagger API Documentation](./src/data/images/swagger-api-documentation.png)

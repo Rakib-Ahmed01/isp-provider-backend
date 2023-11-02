@@ -2,10 +2,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import { rateLimit } from 'express-rate-limit';
-import swaggerUi from 'swagger-ui-express';
-
 import fs from 'fs';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 import YAML from 'yaml';
 import { globalErrorHandler, notFoundHandler } from './middlewares/errors';
 import { router } from './routes';
@@ -40,9 +39,9 @@ app.use([
 ]);
 
 // Home Routes
-// app.get('/', (req: Request, res: Response) => {
-//   res.json({ message: 'Welcome to Book Catalog Server...🐱‍🏍' });
-// });
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Welcome to Book Catalog Server...🐱‍🏍' });
+});
 
 app.get('/api/v1', (req: Request, res: Response) => {
   res.json({ message: 'Welcome to Book Catalog Server...🐱‍🏍' });
@@ -51,7 +50,7 @@ app.get('/api/v1', (req: Request, res: Response) => {
 app.use('/api/v1', router);
 
 app.use(
-  '/',
+  '/docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     customSiteTitle: 'QuickNet API Documentation',
