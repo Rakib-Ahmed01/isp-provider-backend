@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: QuickNet
+  title: QuickNet (Not Complete)
   description: The QuickNet ISP Provider website will serve as the online platform for customers to explore, select, and manage internet service plans and related services. The website will include features for user registration, plan selection, order processing, account management, etc.
   version: 1.0.0
 
