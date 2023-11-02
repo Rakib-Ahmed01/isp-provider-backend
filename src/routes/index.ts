@@ -3,6 +3,7 @@ import { authRouter } from '../modules/auth/auth.route';
 import { blogRouter } from '../modules/blog/blog.route';
 import { faqRouter } from '../modules/faq/faq.route';
 import { feedbackRouter } from '../modules/feedback/feedback.route';
+import { healthcheckRouter } from '../modules/healthcheck/healthcheck.route';
 import { orderRouter } from '../modules/order/order.route';
 import { planRouter } from '../modules/plan/plan.route';
 import { profileRouter } from '../modules/profile/profile.route';
@@ -47,6 +48,10 @@ const routes: Route[] = [
   {
     path: '/faqs',
     router: faqRouter,
+  },
+  {
+    path: '/healthcheck',
+    router: healthcheckRouter,
   },
 ];
 

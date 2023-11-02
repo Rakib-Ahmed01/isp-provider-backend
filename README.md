@@ -169,4 +169,5 @@ Example: Route - HTTP Verb [Roles]
 # Database Design
 
 ![Database Diagram](/src/data/images/isp-db-diagram.png)
+
 [Database Diagram](https://dbdiagram.io/d/65422a817d8bbd6465449082)
