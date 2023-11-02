@@ -168,4 +168,4 @@ Example: Route - HTTP Verb [Roles]
 
 # Database Design
 
-<iframe src="https://dbdiagram.io/d/65422a817d8bbd6465449082" width="500" height="400"></iframe>
+![Database Diagram](/src/data/images/isp-db-diagram.png)
