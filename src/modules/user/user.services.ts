@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 import prisma from '../../lib/prisma';
+import { JwtPayload } from '../../types/JwtPayload';
 import { isEmptyObject } from '../../utils/isEmptyObject';
 import throwApiError from '../../utils/throwApiError';
 import { IUser } from './user.interface';
@@ -16,7 +17,30 @@ const selectUserProperties: Prisma.UserSelect = {
   updatedAt: true,
 };
 
-export const getAllUsersService = async (role: IUser['role']) => {
+export const getAllUsersService = async (
+  role: IUser['role'],
+  jwtPayload: JwtPayload,
+) => {
+  if (!role && jwtPayload.role === 'admin') {
+    return await prisma.user.findMany({
+      where: {
+        role: 'user',
+      },
+      select: selectUserProperties,
+    });
+  }
+
+  if (!role && jwtPayload.role === 'super_admin') {
+    return await prisma.user.findMany({
+      where: {
+        role: {
+          in: ['admin', 'user'],
+        },
+      },
+      select: selectUserProperties,
+    });
+  }
+
   if (role !== 'user' && role !== 'admin' && role !== 'super_admin') {
     throwApiError(StatusCodes.BAD_REQUEST, 'Invalid role');
   }

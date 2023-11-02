@@ -11,6 +11,7 @@ import {
   createReviewService,
   deletePlanService,
   getAllPlansService,
+  getAllReviewsService,
   getSinglePlanService,
   updatePlanService,
 } from './plan.services';
@@ -41,6 +42,19 @@ export const createReview = expressAsyncHandler(
       message: 'Review created successfully',
       success: true,
       data: createdReview,
+    });
+  },
+);
+
+export const getAllReviews = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const reviews = await getAllReviewsService();
+
+    sendResponse<IReview[]>(res, {
+      statusCode: StatusCodes.CREATED,
+      message: 'Reviews retrieved successfully',
+      success: true,
+      data: reviews,
     });
   },
 );

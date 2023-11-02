@@ -27,6 +27,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   console.log(error);
 
   const errorResponse = {
+    statusCode: status,
     success: false,
     message: 'Something went wrong!',
     errors: errors,

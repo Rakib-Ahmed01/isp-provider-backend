@@ -14,7 +14,7 @@ export const blogRouter = express.Router();
 
 blogRouter
   .route('/:id')
-  .get(auth(['admin', 'super_admin']), getSingleBlog)
+  .get(getSingleBlog)
   .patch(
     auth(['admin', 'super_admin']),
     validateRequest(updateBlogSchema),
@@ -24,7 +24,7 @@ blogRouter
 
 blogRouter
   .route('/')
-  .get(auth(['admin', 'super_admin']), getAllBlogs)
+  .get(getAllBlogs)
   .post(
     auth(['admin', 'super_admin']),
     validateRequest(createBlogSchema),

@@ -6,6 +6,7 @@ import {
   createReview,
   deletePlan,
   getAllPlans,
+  getAllReviews,
   getSinglePlan,
   updatePlan,
 } from './plan.controller';
@@ -24,13 +25,23 @@ planRouter.post(
   createReview,
 );
 
+planRouter.get('/reviews', getAllReviews);
+
 planRouter
   .route('/:id')
   .get(getSinglePlan)
-  .patch(validateRequest(updatePlanSchema), updatePlan)
-  .delete(deletePlan);
+  .patch(
+    auth(['admin', 'super_admin']),
+    validateRequest(updatePlanSchema),
+    updatePlan,
+  )
+  .delete(auth(['admin', 'super_admin']), deletePlan);
 
 planRouter
   .route('/')
   .get(getAllPlans)
-  .post(validateRequest(createPlanSchema), createPlan);
+  .post(
+    auth(['admin', 'super_admin']),
+    validateRequest(createPlanSchema),
+    createPlan,
+  );

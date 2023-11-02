@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
+import { JwtPayload } from '../../types/JwtPayload';
 import { pickOptions } from '../../utils/pickOptions';
 import { sendResponse } from '../../utils/sendResponse';
 import { IUser } from './user.interface';
@@ -16,10 +17,11 @@ export const getAllUsers = expressAsyncHandler(
     const { role } = pickOptions(req.query as Record<string, unknown>, [
       'role',
     ]) as { role: IUser['role'] };
-    const users = await getAllUsersService(role);
+    const jwtPayload = req.jwtPayload;
+    const users = await getAllUsersService(role, jwtPayload as JwtPayload);
 
     sendResponse<Omit<IUser, 'password'>>(res, {
-      statusCode: StatusCodes.CREATED,
+      statusCode: StatusCodes.OK,
       message: 'Users retrieved successfully',
       success: true,
       data: users,
@@ -33,7 +35,7 @@ export const getSingleUser = expressAsyncHandler(
     const user = await getSingleUserService(id);
 
     sendResponse<Omit<IUser, 'password'>>(res, {
-      statusCode: StatusCodes.CREATED,
+      statusCode: StatusCodes.OK,
       message: 'User retrieved successfully',
       success: true,
       data: user,

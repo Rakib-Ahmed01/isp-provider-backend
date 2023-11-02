@@ -23,6 +23,16 @@ export const getAllFeedbacksService = async (
       orderBy: {
         [sortBy]: sortOrder,
       },
+      include: {
+        user: {
+          select: {
+            name: true,
+            profileImg: true,
+            email: true,
+            id: true,
+          },
+        },
+      },
     }),
     prisma.feedback.count(),
   ]);

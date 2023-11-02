@@ -24,7 +24,7 @@ faqRouter
 
 faqRouter
   .route('/')
-  .get(auth(['admin', 'super_admin']), getAllFaqs)
+  .get(getAllFaqs)
   .post(
     auth(['admin', 'super_admin']),
     validateRequest(createFaqSchema),

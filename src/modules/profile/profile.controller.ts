@@ -12,8 +12,8 @@ export const getProfile = expressAsyncHandler(
     const user = await getProfileService(jwtPayload as JwtPayload);
 
     sendResponse<Omit<IUser, 'password'>>(res, {
-      statusCode: StatusCodes.CREATED,
-      message: 'User retrieved successfully',
+      statusCode: StatusCodes.OK,
+      message: 'User profile information retrieved successfully',
       success: true,
       data: user,
     });

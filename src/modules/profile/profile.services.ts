@@ -13,7 +13,7 @@ export const getProfileService = async (jwtPayload: JwtPayload) => {
   });
 
   if (!user) {
-    throwApiError(StatusCodes.NOT_FOUND, 'Not found');
+    throwApiError(StatusCodes.NOT_FOUND, 'User not found');
   }
 
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars

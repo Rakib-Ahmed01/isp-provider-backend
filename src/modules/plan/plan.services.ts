@@ -85,6 +85,28 @@ export const createReviewService = async (
   });
 };
 
+export const getAllReviewsService = async () => {
+  return prisma.review.findMany({
+    take: 3,
+    include: {
+      user: {
+        select: {
+          name: true,
+          profileImg: true,
+          email: true,
+          id: true,
+        },
+      },
+      plan: {
+        select: {
+          title: true,
+          id: true,
+        },
+      },
+    },
+  });
+};
+
 export const getAllPlansService = async (
   paginationOption: PaginationOptions,
   filterOption: PlanFilterOptions,
